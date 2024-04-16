@@ -4,6 +4,7 @@ import com.tungdd.k8sdemo.logs.service.LogService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/metrics")
 public class MetricsController {
 
     private final LogService logService;
@@ -20,7 +22,7 @@ public class MetricsController {
     @Value("${metrics.averagingperiod}")
     private final double averagingPeriod = 60.0;
 
-    @GetMapping(value = "/metrics", produces = "application/json")
+    @GetMapping(value = "/getMetrics", produces = "application/json")
     public Map<String, Object> metrics() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, -(int) averagingPeriod);

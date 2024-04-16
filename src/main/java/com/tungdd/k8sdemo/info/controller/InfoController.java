@@ -3,26 +3,33 @@ package com.tungdd.k8sdemo.info.controller;
 import com.tungdd.k8sdemo.info.entity.InfoEntity;
 import com.tungdd.k8sdemo.logs.entity.LogEntity;
 import com.tungdd.k8sdemo.logs.service.LogService;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Random;
 
 @RestController
-@Getter
-@Setter
+@AllArgsConstructor
+@RequestMapping("/info")
 public class InfoController {
 
 
-    private LogService logService;
-
-    private InetAddress address;
+    private final LogService logService;
     private final Random random = new Random();
 
-    @GetMapping("/info")
+    @GetMapping("/getInfo")
     public InfoEntity info() throws InterruptedException {
+
+        InetAddress address;
+        try {
+            address = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
         long latency = (long) (random.nextFloat() * 10);
         Thread.sleep(latency);
         LogEntity log = LogEntity.builder()
