@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8sdemo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8sdemo-app
+  template:
+    metadata:
+      labels:
+        app: k8sdemo-app
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+    spec:
+      containers:
+        - name: k8sdemo-app
+          image: tungduongduc/k8sdemo-app
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            limits:
+              memory: "256Mi"
