@@ -21,7 +21,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:mysql://127.0.0.1:3306/k8sdemo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+              value: "jdbc:mysql://10.104.0.4:3306/k8sdemo"
             - name: SPRING_DATASOURCE_USERNAME
               value: "admin"
             - name: SPRING_DATASOURCE_PASSWORD
