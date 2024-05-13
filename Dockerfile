@@ -16,7 +16,7 @@ COPY ./src /app/src
 # Build the project and create the jar file
 RUN mvn clean package -DskipTests
 
-# Run stage with JRE to reduce image size
+# Run stage with JDK Slim
 FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
