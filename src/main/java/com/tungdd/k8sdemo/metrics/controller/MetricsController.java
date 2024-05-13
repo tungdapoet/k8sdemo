@@ -14,7 +14,6 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/metrics")
 public class MetricsController {
 
     private final LogService logService;
@@ -22,7 +21,7 @@ public class MetricsController {
     @Value("${metrics.averagingperiod}")
     private final double averagingPeriod = 60.0;
 
-    @GetMapping(value = "/getMetrics", produces = "application/json")
+    @GetMapping(value = "/metrics", produces = "application/json")
     public Map<String, Object> metrics() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, -(int) averagingPeriod);

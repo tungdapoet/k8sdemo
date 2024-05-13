@@ -11,6 +11,6 @@ public class HealthController {
 
     @GetMapping("/status")
     public HealthEntity getStatus() {
-        return new HealthEntity("Running");
+        return new HealthEntity("up");
     }
 }
