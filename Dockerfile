@@ -17,7 +17,7 @@ COPY ./src /app/src
 RUN mvn clean package -DskipTests
 
 # Run stage with JRE to reduce image size
-FROM openjdk:17-jre-slim
+FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
