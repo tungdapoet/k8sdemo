@@ -19,6 +19,13 @@ spec:
         - name: k8sdemo-app
           image: tungduongduc/k8sdemo-app:latest
           imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://127.0.0.1:3306/k8sdemo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "admin"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "Salute@1401"
           ports:
             - containerPort: 8080
           readinessProbe:
