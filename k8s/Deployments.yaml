@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8sdemo-app
+  namespace: application
 spec:
   replicas: 1
   selector:
@@ -14,6 +15,7 @@ spec:
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/path: '/metrics'
+        prometheus.io/port: '8080'
     spec:
       containers:
         - name: k8sdemo-app
@@ -27,6 +29,16 @@ spec:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health/status
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
           resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
             limits:
               memory: "256Mi"
+              cpu: "500m"
