@@ -4,13 +4,10 @@ import com.tungdd.k8sdemo.logs.service.LogService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -21,19 +18,24 @@ public class MetricsController {
     @Value("${metrics.averagingperiod}")
     private final double averagingPeriod = 60.0;
 
-    @GetMapping(value = "/metrics", produces = "application/json")
-    public Map<String, Object> metrics() {
+    @GetMapping(value = "/metrics", produces = "text/plain")
+    public String metrics() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, -(int) averagingPeriod);
         java.util.Date startTime = calendar.getTime();
 
         double rate = logService.getRequestCount(startTime) / averagingPeriod;
 
-        Map<String, Object> metrics = new HashMap<>();
-        metrics.put("request_per_second", rate);
-        metrics.put("averaging_period", averagingPeriod);
+        String metrics = """
+            # HELP request_per_second The number of requests per second.
+            # TYPE request_per_second gauge
+            request_per_second %f
+            # HELP averaging_period The averaging period for request rate.
+            # TYPE averaging_period gauge
+            averaging_period %f
+            """.formatted(rate, averagingPeriod);
 
-        return metrics;
+        return metrics.trim();
     }
 }
 
