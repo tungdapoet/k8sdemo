@@ -20,7 +20,7 @@ public class InfoController {
     private final LogService logService;
     private final Random random = new Random();
 
-    @GetMapping("/getInfo")
+    @GetMapping("/hostname")
     public InfoEntity info() throws InterruptedException {
 
         InetAddress address;
