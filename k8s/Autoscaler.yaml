@@ -29,4 +29,4 @@ spec:
           name: request_per_second
         target:
           type: AverageValue
-          averageValue: 50
+          averageValue: "50"
