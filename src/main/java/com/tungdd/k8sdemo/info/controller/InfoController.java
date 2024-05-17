@@ -1,43 +1,41 @@
 package com.tungdd.k8sdemo.info.controller;
 
-import com.tungdd.k8sdemo.info.entity.InfoEntity;
-import com.tungdd.k8sdemo.logs.entity.LogEntity;
-import com.tungdd.k8sdemo.logs.service.LogService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Random;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/info")
 public class InfoController {
 
-
-    private final LogService logService;
-    private final Random random = new Random();
-
     @GetMapping("/hostname")
-    public InfoEntity info() throws InterruptedException {
+    public Map<String, Object> info() {
+        Map<String, Object> info = new HashMap<>();
 
-        InetAddress address;
         try {
-            address = InetAddress.getLocalHost();
+            // Get hostname
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            info.put("hostname", inetAddress.getHostName());
         } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+            info.put("hostname", "Unknown Host");
         }
 
-        long latency = (long) (random.nextFloat() * 10);
-        Thread.sleep(latency);
-        LogEntity log = LogEntity.builder()
-                .code(200L)
-                .endpoint("/info")
-                .responseTime(latency).build();
-        logService.saveOrUpdate(log);
-        return new InfoEntity(address.getHostName(), latency);
+        // Measure latency
+        Instant start = Instant.now();
+        Instant end = Instant.now();
+        Duration latency = Duration.between(start, end);
+        info.put("latency", latency.toMillis() + " ms");
+
+        return info;
     }
 }
 
