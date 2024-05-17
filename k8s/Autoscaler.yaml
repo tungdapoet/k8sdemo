@@ -8,25 +8,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: k8sdemo-app
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 10
   metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 70
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: 70
     - type: Pods
       pods:
         metric:
           name: request_per_second
         target:
           type: AverageValue
-          averageValue: "50"
+          averageValue: "20"
