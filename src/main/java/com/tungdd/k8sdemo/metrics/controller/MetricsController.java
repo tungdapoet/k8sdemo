@@ -13,7 +13,7 @@ public class MetricsController {
 
     @GetMapping(value = "/metrics", produces = "text/plain")
     public String metrics() {
-        return prometheusMeterRegistry.scrape();
+        return prometheusMeterRegistry.scrape() + "# EOF";
     }
 }
 

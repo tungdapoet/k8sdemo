@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: k8sdemo-app
-          image: tungduongduc/k8sdemo-app:2.1-final
+          image: tungduongduc/k8sdemo-app:2.2-final
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
