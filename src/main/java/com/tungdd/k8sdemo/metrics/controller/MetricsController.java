@@ -11,7 +11,7 @@ public class MetricsController {
 
     private final PrometheusMeterRegistry prometheusMeterRegistry;
 
-    @GetMapping("/metrics")
+    @GetMapping(name = "/metrics", produces = "text/plain")
     public String metrics() {
         return prometheusMeterRegistry.scrape();
     }
