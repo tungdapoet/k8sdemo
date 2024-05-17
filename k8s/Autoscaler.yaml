@@ -14,7 +14,7 @@ spec:
     - type: Pods
       pods:
         metric:
-          name: http_requests_total
+          name: http_requests_active
         target:
           type: AverageValue
           averageValue: "20"
