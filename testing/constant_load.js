@@ -14,7 +14,7 @@ export const options = {
 };
 
 export default function () {
-    const res = http.get('http://localhost:30080/info/hostname');
+    const res = http.get('http://localhost:8080/info/hostname');
 
     if (res.status !== 200) {
         console.error(`Request failed. Status: ${res.status}`);
